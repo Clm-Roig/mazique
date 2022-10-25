@@ -1,0 +1,9 @@
+{
+  "include": ["./**/*.ts"],
+  "paths": {
+    "@/*": ["./*"]
+  },
+  "compilerOptions": {
+    "lib": ["ES2017", "DOM"]
+  }
+}
