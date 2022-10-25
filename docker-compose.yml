@@ -5,11 +5,13 @@ services:
   database:
     container_name: music-data-db
     image: postgres:${POSTGRES_VERSION:-14}-alpine
+    env_file:
+      - ".env"
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-music-data}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
-      POSTGRES_USER: ${POSTGRES_USER:-root}
+      POSTGRES_DB: ${POSTGRES_DB:?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+      POSTGRES_PORT: ${POSTGRES_PORT:?err}
+      POSTGRES_USER: ${POSTGRES_USER:?err}
     healthcheck:
       test: pg_isready
     ports:
@@ -23,11 +25,12 @@ services:
   test-database:
     container_name: music-data-test-db
     image: postgres:${POSTGRES_VERSION:-14}-alpine
+    env_file:
+      - .env.test
     environment:
-      POSTGRES_DB: ${POSTGRES_TEST_DB:-music-data-test}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_TEST_PASSWORD:-root}
-      POSTGRES_USER: ${POSTGRES_TEST_USER:-root}
+      POSTGRES_DB: ${POSTGRES_DB:?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+      POSTGRES_USER: ${POSTGRES_USER:?err}
     healthcheck:
       test: pg_isready
     ports:
