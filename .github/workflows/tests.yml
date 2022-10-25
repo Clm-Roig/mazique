@@ -1,5 +1,9 @@
 name: Tests
 on: [push]
+
+env:
+  APP_ENV: test
+
 jobs:
   php-unit-and-functional-tests:
     runs-on: ubuntu-latest
