@@ -61,9 +61,7 @@ jobs:
         run: php bin/console -V
       # —— Code style —— (Based on this package: https://github.com/OskarStark/php-cs-fixer-ga)
       - name: PHP-CS-Fixer
-        uses: docker://oskarstark/php-cs-fixer-ga
-        with:
-          args: --config=.php_cs.dist --diff --dry-run
+        run: composer cs-fix
       # —— Test DB Setup ——————
       - name: Database creation
         run: php bin/console --env=test doctrine:database:create
