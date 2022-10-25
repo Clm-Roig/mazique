@@ -32,10 +32,12 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: none
-          tools: composer:v2
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo
+          tools: php-cs-fixer, composer:v2, phpunit
+          extensions: mbstring, intl, pdo_pgsql, pgsql, gd
         env:
           update: true
+      - name: Check PHP Extensions
+        run: php -m
       - name: Check PHP Version
         run: php -v
       # —— Composer —————————————————————————————————————————————————————————
