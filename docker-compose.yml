@@ -1,21 +1,42 @@
-version: '3'
+version: "3"
 
 services:
-###> doctrine/doctrine-bundle ###
+  ###> doctrine/doctrine-bundle ###
   database:
+    container_name: music-data-db
     image: postgres:${POSTGRES_VERSION:-14}-alpine
+    env_file:
+      - ".env"
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
-    volumes:
-      - db-data:/var/lib/postgresql/data:rw
+      POSTGRES_DB: ${POSTGRES_DB:?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+      POSTGRES_PORT: ${POSTGRES_PORT:?err}
+      POSTGRES_USER: ${POSTGRES_USER:?err}
+    healthcheck:
+      test: pg_isready
+    ports:
+      - "54320:5432"
+      # volumes:
+      #   - db-data:/var/lib/postgresql/data:rw
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+  ###< doctrine/doctrine-bundle ###
+
+  test-database:
+    container_name: music-data-test-db
+    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    env_file:
+      - .env.test
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+      POSTGRES_USER: ${POSTGRES_USER:?err}
+    healthcheck:
+      test: pg_isready
+    ports:
+      - "54330:5432"
 
 volumes:
-###> doctrine/doctrine-bundle ###
+  ###> doctrine/doctrine-bundle ###
   db-data:
 ###< doctrine/doctrine-bundle ###
