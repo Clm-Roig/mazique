@@ -1,27 +1,47 @@
 name: Tests
 on: [push]
+
+env:
+  APP_ENV: test
+
 jobs:
   php-unit-and-functional-tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
         php-versions: ["8.1"]
+
+    # PostGreSQL test database init
+    services:
+      postgres:
+        image: postgis/postgis
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: music-data-test
+        ports:
+          - 54330:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       # —— Setup Github actions —————————————————————————————————————————————
       # https://github.com/actions/checkout (official)
       - name: Git checkout placeholder-service
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.5.0
       # https://github.com/shivammathur/setup-php (community)
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@2.21.2
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: none
-          tools: composer:v2
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo
+          tools: php-cs-fixer, composer:v2, phpunit
+          extensions: mbstring, intl, pdo_pgsql, pgsql, gd
         env:
           update: true
+      - name: Check PHP Extensions
+        run: php -m
       - name: Check PHP Version
         run: php -v
       # —— Composer —————————————————————————————————————————————————————————
@@ -29,9 +49,9 @@ jobs:
         run: composer validate
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - name: Cache composer dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v3.0.11
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -42,16 +62,15 @@ jobs:
       - name: Check Symfony requirements
         run: vendor/bin/requirements-checker
       - name: Check the Symfony console
-        run: bin/console -V
+        run: php bin/console -V
       # —— Code style —— (Based on this package: https://github.com/OskarStark/php-cs-fixer-ga)
       - name: PHP-CS-Fixer
-        uses: docker://oskarstark/php-cs-fixer-ga
-        with:
-          args: --config=.php_cs.dist --diff --dry-run
+        run: composer cs-fix
+      # —— Test DB Setup ——————
+      - name: Database creation
+        run: php bin/console --env=test doctrine:database:create
+      - name: Database schema setup
+        run: php bin/console --env=test doctrine:schema:create
       ## —— Tests ———————————————————————————————————————————————————————————
       - name: Run functionnal and unit tests
-        run: |
-          cp .env.ci .env.test
-          cp .env.ci .env
-          cp phpunit.ci.xml phpunit.xml
-          composer test
+        run: composer test
