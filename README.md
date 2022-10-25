@@ -18,3 +18,7 @@ Create Docker databases
 Run server
 
 `symfony server:start`
+
+Run webpack to compile the client
+
+`npm run dev-server`
