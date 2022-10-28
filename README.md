@@ -1,4 +1,4 @@
-# Music Data
+# Mazique
 
 A music database about bands, places, cities and organizations.
 
@@ -8,6 +8,7 @@ A music database about bands, places, cities and organizations.
 
 - PHP v8+
 - Docker
+- Symfony CLI
 
 ### Scripts
 
