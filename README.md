@@ -1,4 +1,4 @@
-# Mazique
+# Miz
 
 A music database about bands, places, cities and organizations.
 

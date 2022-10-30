@@ -3,7 +3,7 @@ version: "3"
 services:
   ###> doctrine/doctrine-bundle ###
   database:
-    container_name: mazique-db
+    container_name: miz-db
     image: postgres:${POSTGRES_VERSION:-14}-alpine
     env_file:
       - ".env"
@@ -23,7 +23,7 @@ services:
   ###< doctrine/doctrine-bundle ###
 
   test-database:
-    container_name: mazique-test-db
+    container_name: miz-test-db
     image: postgres:${POSTGRES_VERSION:-14}-alpine
     env_file:
       - .env.test
