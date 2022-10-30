@@ -22,6 +22,12 @@ symfony server:start    # Run the web server
 npm run dev-server      # Run Webpack to compile the Vue client
 ```
 
+BD migrations
+
+```bash
+symfony console doctrine:migrations:migrate
+```
+
 Run tests
 
 ```bash
