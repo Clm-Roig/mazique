@@ -38,10 +38,17 @@ class Band
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'bands')]
     private Collection $users;
 
+    #[ORM\ManyToOne(inversedBy: 'bands')]
+    private ?BandStatus $status = null;
+
+    #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'bands')]
+    private Collection $genres;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +151,42 @@ class Band
         if ($this->users->removeElement($user)) {
             $user->removeBand($this);
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?BandStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?BandStatus $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Genre>
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): self
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres->add($genre);
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): self
+    {
+        $this->genres->removeElement($genre);
 
         return $this;
     }
