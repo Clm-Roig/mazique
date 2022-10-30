@@ -13,6 +13,7 @@ A music database about bands, places, cities and organizations.
 ### Scripts
 
 ```bash
+composer install        # Install dependencies
 docker-compose up -d    # Create Docker database and mailer
 symfony server:start    # Run the web server
 npm run dev-server      # Run Webpack to compile the Vue client
