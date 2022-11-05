@@ -1,8 +1,7 @@
 {
-  "public/build/app.css": "http://localhost:8080/public/build/app.css",
-  "public/build/app.js": "http://localhost:8080/public/build/app.js",
-  "public/build/runtime.js": "http://localhost:8080/public/build/runtime.js",
-  "public/build/vendors-node_modules_core-js_modules_es_function_name_js-node_modules_core-js_modules_es_json-809549.js": "http://localhost:8080/public/build/vendors-node_modules_core-js_modules_es_function_name_js-node_modules_core-js_modules_es_json-809549.js",
-  "public/build/vendors-node_modules_core-js_modules_es_object_define-property_js-node_modules_mini-css-extra-804e7b.js": "http://localhost:8080/public/build/vendors-node_modules_core-js_modules_es_object_define-property_js-node_modules_mini-css-extra-804e7b.js",
-  "public/build/vendors-node_modules_core-js_modules_es_function_name_js-node_modules_core-js_modules_es_obje-9c493b.js": "http://localhost:8080/public/build/vendors-node_modules_core-js_modules_es_function_name_js-node_modules_core-js_modules_es_obje-9c493b.js"
+  "build/app.css": "http://localhost:8080/build/app.css",
+  "build/app.js": "http://localhost:8080/build/app.js",
+  "build/runtime.js": "http://localhost:8080/build/runtime.js",
+  "build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-e9279f.js": "http://localhost:8080/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-e9279f.js",
+  "build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-cb9042.js": "http://localhost:8080/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-cb9042.js"
 }

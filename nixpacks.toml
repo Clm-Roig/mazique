@@ -4,14 +4,16 @@ nixPkgs = ['php81', 'nodePackages.npm', 'nodejs', 'symfony-cli', 'php81Packages.
 [phases.build]
 cmds = [
 	# API setup
-	'composer validate', 
-	'composer install --no-dev --optimize-autoloader', 
-	'php bin/console cache:clear --env=prod', 
-	'composer dump-env prod', 
-	# Vue client setup
-	'npm install', 
+	'composer validate',
+	'composer install --no-dev --optimize-autoloader',
+	'php bin/console cache:clear --env=prod',
+	'composer dump-env prod',
+
+	# Client setup
+	'npm install',
 	'npm run build',
 
+	# Debug
 	'php bin/console debug:dotenv',
 	'php bin/console debug:container --env-vars',
 ]
