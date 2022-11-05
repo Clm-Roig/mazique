@@ -8,13 +8,12 @@ cmds = [
 	'composer install --no-dev --optimize-autoloader',
 	'php bin/console cache:clear --env=prod',
 	'composer dump-env prod',
-	'symfony console doctrine:migrations:migrate',
 
-	# Vue client setup
+	# Client setup
 	'npm install',
 	'npm run build',
 
-	# env print
+	# Debug
 	'php bin/console debug:dotenv',
 	'php bin/console debug:container --env-vars',
 ]

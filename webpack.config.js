@@ -10,7 +10,7 @@ Encore
   // directory where compiled assets will be stored
   .setOutputPath("public/build/")
   // public path used by the web server to access the output path
-  .setPublicPath("/public/build")
+  .setPublicPath("/build")
   // only needed for CDN's or subdirectory deploy
   //.setManifestKeyPrefix('build/')
 
@@ -20,10 +20,10 @@ Encore
    * Each entry will result in one JavaScript file (e.g. app.js)
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
-  .addEntry("app", "./assets/main.ts")
+  .addEntry("app", "./assets/app.js")
 
   // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-  // .enableStimulusBridge("./assets/controllers.json")
+  .enableStimulusBridge("./assets/controllers.json")
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
@@ -40,7 +40,7 @@ Encore
    * https://symfony.com/doc/current/frontend.html#adding-more-features
    */
   .cleanupOutputBeforeBuild()
-  // .enableBuildNotifications()
+  //   .enableBuildNotifications()
   .enableSourceMaps(!Encore.isProduction())
   // enables hashed filenames (e.g. app.abc123.css)
   .enableVersioning(Encore.isProduction())
@@ -57,12 +57,10 @@ Encore
   })
 
   // enables Sass/SCSS support
-  .enableSassLoader()
+  .enableSassLoader();
 
-  // uncomment if you use TypeScript
-  .enableTypeScriptLoader()
-
-  .enableVueLoader(() => {}, { runtimeCompilerBuild: false });
+// uncomment if you use TypeScript
+//.enableTypeScriptLoader()
 
 // uncomment if you use React
 //.enableReactPreset()
