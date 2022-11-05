@@ -1,0 +1,10 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "http://localhost:8080/public/build/runtime.js",
+        "http://localhost:8080/public/build/app.js"
+      ]
+    }
+  }
+}
