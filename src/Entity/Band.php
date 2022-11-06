@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[ORM\Entity(repositoryClass: BandRepository::class)]
 class Band
@@ -19,7 +20,7 @@ class Band
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -78,6 +79,15 @@ class Band
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function computeSlug(SluggerInterface $slugger)
+    {
+        if (!$this->slug) {
+            // The slug generated could not be unique because it's generated only from the band name.
+            // TODO: compute a unique slug by checking if another band with the same name (and slug) already exists in the DB.
+            $this->slug = (string) $slugger->slug((string) $this->getName(), '-')->lower();
+        }
     }
 
     public function getLogoPath(): ?string
