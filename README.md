@@ -12,14 +12,22 @@ A music database about bands, places, cities and organizations.
 - Docker
 - Docker Compose
 - Symfony CLI
+- npm
 
 ### Scripts
 
 ```bash
-composer install        # Install dependencies
-docker-compose up -d    # Create Docker database and mailer
-symfony server:start    # Run the web server
-npm run dev-server      # Run Webpack to compile the assets
+# Install dependencies
+composer install
+npm install
+# Create Docker database and mailer containers
+docker-compose up -d
+# Load fixtures
+symfony console doctrine:fixtures:load
+# Run the web server
+symfony server:start
+# Run Webpack to compile the assets
+npm run dev-server
 ```
 
 BD migrations
