@@ -27,6 +27,8 @@ symfony console doctrine:migrations:migrate
 # Doctrine fixtures "classic" load fail because it tries to delete the table in an incorrect order
 # See https://github.com/doctrine/DoctrineFixturesBundle/issues/370
 symfony console doctrine:fixtures:load --purge-with-truncate
+# Create schema in test DB
+symfony console --env=test doctrine:schema:create
 # Run the web server
 symfony server:start
 # Run Webpack to compile the assets
